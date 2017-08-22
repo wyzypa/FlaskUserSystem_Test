@@ -1,0 +1,26 @@
+{% extends 'MyBase.html' %}
+{% block title %}用户信息{% endblock %}
+
+{% block head_message %}当前用户信息{% endblock %}
+
+{% block page_content %}
+    <table class="table table-bordered table-hover">
+    <caption>用户信息</caption>
+    <tr>
+        <th>字段名</th>
+        <th>值</th>
+    </tr>
+    <tr>
+        <td>姓名</td>
+        <td>{{ current_user.name }}</td>
+    </tr>
+    <tr>
+        <td>年龄</td>
+        <td>{{ current_user.age }}</td>
+    </tr>
+    <tr>
+        <td>联系电话</td>
+        <td>{{ current_user.phone }}</td>
+    </tr>
+    </table>
+{% endblock %}

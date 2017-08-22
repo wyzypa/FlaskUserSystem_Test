@@ -1,0 +1,35 @@
+{% extends 'bootstrap/base.html' %}
+{% block navbar %}
+    <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <a href="/" class="navbar-brand">用户系统</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('auth.register') }}">注册</a></li>
+            <li><a href="{{ url_for("main.show_userinfo") }}">用户信息</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
+            {% else %}
+            <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+{% block head_message %}<h2>{% block head_message_content %}{% endblock %}</h2>{% endblock %}
+<hr>
+{% block page_content %}
+{% endblock %}
+</div>
+{% endblock %}

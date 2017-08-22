@@ -1,0 +1,7 @@
+{% extends 'MyBase.html' %}
+
+{% block head_message_content %}注册成功！{% endblock %}
+
+{% block page_content %}
+<p>你可以进入<a href="{{ url_for('main.show_userinfo') }}">用户信息</a>界面来查看信息。</p>
+{% endblock %}
