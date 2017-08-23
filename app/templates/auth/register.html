@@ -2,6 +2,12 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block head_message_content %}请注册{% endblock %}
 {% block page_content %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times</button>
+    {{ message }}
+    </div>
+    {% endfor %}
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">

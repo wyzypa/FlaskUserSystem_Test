@@ -3,11 +3,11 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField,IntegerField,PasswordField,HiddenField,SubmitField,BooleanField
-from wtforms.validators import DataRequired,NumberRange,EqualTo
+from wtforms.validators import DataRequired,NumberRange,EqualTo,Email
 
 class UserForm(FlaskForm):
     # id = HiddenField(u'id')
-    id = StringField(u'ID',validators=[DataRequired()])
+    mailAdd = StringField(u'邮箱地址',validators=[DataRequired(),Email(message=u'邮箱格式不对')])
     name = StringField(u'姓名',validators=[DataRequired()])
     passwd = PasswordField(u'密码',validators=[DataRequired()])
     passwd_recheck = PasswordField(u'确认密码',validators=[DataRequired(),EqualTo('passwd',message=u'两次密码输入不一致')])
@@ -16,7 +16,7 @@ class UserForm(FlaskForm):
     submit = SubmitField(u'提交')
 
 class LoginForm(FlaskForm):
-    name = StringField(u'姓名',validators=[DataRequired()])
+    mailAdd = StringField(u'邮箱地址',validators=[DataRequired(),Email(message=u'邮箱格式不对')])
     passwd = PasswordField(u'密码',validators=[DataRequired()])
     remember_me = BooleanField(u'记住我的登录状态')
     submit = SubmitField(u'登录')

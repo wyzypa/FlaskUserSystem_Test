@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 #coding=utf8
+from flask import current_app
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import db
 from . import login_manager
 
 class User(UserMixin,db.Model):
-    __tablename__ = 'users_old'
-    id = db.Column(db.String(8),primary_key=True)
+    __tablename__ = 'users'
+    mailAdd = db.Column(db.String(64),primary_key=True)
     name = db.Column(db.String(32),nullable=False)
     passwd_hash = db.Column(db.String(128),nullable=False)
     age = db.Column(db.Integer,nullable=False)
     phone = db.Column(db.String(16),nullable=True)
+    confirmed = db.Column(db.Boolean,nullable=False,default=False)
 
     @property
     def password(self):
@@ -25,12 +28,28 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.passwd_hash,password)
 
     def get_id(self):
-        return self.name
+        return self.mailAdd
 
+    def generate_confirmation_token(self):
+        s = Serializer(current_app.config['SECRET_KEY'],expires_in=3600)
+        return s.dumps({'confirm':self.mailAdd})
+
+    def confirm_token(self,token):
+        s = Serializer(current_app.config.get('SECRET_KEY'))
+        try:
+            data = s.loads(token)
+        except Exception,e:
+            return False
+        if data.get('confirm') != self.mailAdd:
+            return False
+        self.confirmed = True
+        db.session.add(self)
+        db.session.commit()
+        return True
 
 
 @login_manager.user_loader
-def load_user(user_id): #todo 这个回调函数再每次页面变更或者浏览器重启之类的场景时调用，接受当前用户的一个标识，由用户类所继承或自己重载的get_id方法决定，返回user对象以保证始终保持用户的登录状态
-    print user_id
-    return User.query.filter_by(name=user_id).first()
+def load_user(user_id):
+    # print user_id
+    return User.query.filter_by(mailAdd=user_id).first()
     # return

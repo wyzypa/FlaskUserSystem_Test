@@ -3,5 +3,5 @@
 {% block head_message_content %}注册成功！{% endblock %}
 
 {% block page_content %}
-<p>你可以进入<a href="{{ url_for('main.show_userinfo') }}">用户信息</a>界面来查看信息。</p>
+<p>验证链接已经发往{{ new_user.mailAdd }}，请验收</p>
 {% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'MyBase.html' %}
+
+{% block head_message %}
+    <h2>当前用户未经验证。</h2>
+    {% if mail_site %}
+    <h4>请前往<a href="{{ mail_site }}">验证</a></h4>
+    {% else %}
+    <h4>请前往邮箱验证</h4>
+    {% endif %}
+    <a href="{{ url_for('auth.resend_confirm') }}">点我重新发送验证邮件</a>
+{% endblock %}

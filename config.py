@@ -12,7 +12,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     # SQLALCHEMY_DATABASE_URI = 'mysql://weiyz:123456@192.168.191.112:3306/flask_DB'
-    SQLALCHEMY_DATABASE_URI = 'mysql://weiyz:123456@192.168.1.105:3306/flask_DB'
+    SQLALCHEMY_DATABASE_URI = 'mysql://weiyz:123456@192.168.191.112:3306/flask_DB'
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = ''
@@ -21,4 +21,12 @@ config = {
     'default':DevelopmentConfig,
     'development':DevelopmentConfig,
     'producntion':ProductionConfig
+}
+
+MailSiteMap = {
+    '126':'https://www.126.com/',
+    '163':'https://mail.163.com',
+    'qq':'https://mail.qq.com/',
+    'hotmail':'https://www.hotmail.com/',
+    'gmail':'https://mail.google.com/'
 }
